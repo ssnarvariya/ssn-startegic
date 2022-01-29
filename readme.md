@@ -1,1 +1,1 @@
- ssn-startegic
+This is readme for ssn-strategic
