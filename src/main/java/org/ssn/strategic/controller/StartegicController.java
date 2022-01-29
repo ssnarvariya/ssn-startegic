@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.ssn.strategic.persistence.model.Employee;
+import org.ssn.strategic.response.dto.MessageDTO;
 import org.ssn.strategic.security.StrategicAuthRequest;
 import org.ssn.strategic.security.service.StrategicUserDetailService;
 import org.ssn.strategic.security.util.JwtUtil;
+import org.ssn.strategic.service.StrategicEmployee;
 
 @RestController
 public class StartegicController {
@@ -25,6 +28,9 @@ public class StartegicController {
 	
 	@Autowired
 	JwtUtil jwtUtil;
+	
+	@Autowired
+	StrategicEmployee strategicEmployee;
 
 	@RequestMapping("/health")
 	public ResponseEntity<String> checkHealth(){
@@ -43,4 +49,11 @@ public class StartegicController {
 		final String lToken = jwtUtil.generateToken(userDetails);
 		return ResponseEntity.ok(lToken);
 	}
+	
+	@RequestMapping(value = "/create", method= RequestMethod.POST)
+	public ResponseEntity<MessageDTO> createStrategicEmployee(@RequestBody Employee employee){
+		MessageDTO messageDTO = strategicEmployee.createStrategicEmp(employee);
+		return ResponseEntity.ok(messageDTO);
+	}
+	
 }
